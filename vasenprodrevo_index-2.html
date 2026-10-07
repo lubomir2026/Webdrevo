@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#182018" />
+  <meta name="description" content="Vášeň pro dřevo s.r.o. – zpracování dřeva a dřevěné výrobky z Opavy. Poctivé řemeslo, přírodní materiál, osobní přístup." />
+  <title>Vášeň pro dřevo | Dřevo, které má charakter</title>
+
+  <style>
+    :root{
+      --ink:#182018;
+      --ink-2:#263128;
+      --cream:#f4efe4;
+      --paper:#fbf8f1;
+      --wood:#9a6038;
+      --wood-dark:#673d24;
+      --moss:#66765b;
+      --line:rgba(24,32,24,.14);
+      --shadow:0 24px 70px rgba(24,32,24,.12);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:var(--paper);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button,input,textarea{font:inherit}
+    ::selection{background:#cfb28d;color:var(--ink)}
+
+    .grain{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:100;
+      opacity:.18;
+      mix-blend-mode:multiply;
+      background-image:
+        repeating-radial-gradient(ellipse at 0 0, transparent 0, rgba(85,58,38,.06) 1px, transparent 2px, transparent 9px),
+        repeating-linear-gradient(8deg, transparent 0 7px, rgba(85,58,38,.025) 8px 9px);
+    }
+
+    .wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+
+    .nav{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(1180px,calc(100% - 28px));
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:11px 12px 11px 18px;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(247,242,232,.82);
+      backdrop-filter:blur(18px);
+      border-radius:999px;
+      box-shadow:0 12px 45px rgba(24,32,24,.08);
+    }
+
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em}
+    .brand svg{width:40px;height:40px}
+    .brand small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6b746b;font-weight:700}
+
+    .links{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:650}
+    .links a{opacity:.72;transition:.2s ease}
+    .links a:hover{opacity:1}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:48px;
+      padding:0 20px;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:760;
+      transition:.22s ease;
+      cursor:pointer;
+    }
+    .btn-dark{background:var(--ink);color:white}
+    .btn-dark:hover{transform:translateY(-2px);background:#273028}
+    .btn-light{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:white}
+    .btn-light:hover{background:rgba(255,255,255,.15)}
+    .btn-outline{border-color:var(--line);background:transparent}
+    .btn-outline:hover{background:white}
+
+    .hero{
+      min-height:100svh;
+      position:relative;
+      display:grid;
+      align-items:end;
+      color:#fff;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg,rgba(13,18,13,.88) 0%,rgba(13,18,13,.64) 42%,rgba(13,18,13,.24) 72%,rgba(13,18,13,.46) 100%),
+        radial-gradient(circle at 82% 28%,rgba(212,166,110,.5),transparent 28%),
+        linear-gradient(135deg,#33402e,#161d16 68%,#482c1c);
+    }
+
+    .hero:before{
+      content:"";
+      position:absolute;inset:0;
+      opacity:.44;
+      background:
+        repeating-radial-gradient(ellipse at 92% 52%, transparent 0 12px, rgba(226,193,151,.16) 13px 15px, transparent 16px 34px),
+        linear-gradient(110deg,transparent 0 58%,rgba(161,102,61,.16) 59% 60%,transparent 61%);
+      transform:scale(1.25);
+    }
+
+    .hero-art{
+      position:absolute;
+      right:-7vw;
+      top:8vh;
+      width:min(720px,58vw);
+      aspect-ratio:1/1;
+      opacity:.92;
+      filter:drop-shadow(0 28px 45px rgba(0,0,0,.25));
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      padding:160px 0 74px;
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) .85fr;
+      gap:60px;
+      align-items:end;
+    }
+
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:800;
+      opacity:.78;margin-bottom:22px;
+    }
+    .eyebrow:before{content:"";width:34px;height:1px;background:currentColor}
+
+    h1{
+      margin:0;
+      max-width:800px;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:clamp(58px,8.2vw,126px);
+      line-height:.83;
+      letter-spacing:-.065em;
+      font-weight:500;
+    }
+    h1 em{font-weight:400;color:#d7bb95}
+
+    .hero-copy p{
+      max-width:620px;
+      margin:30px 0 30px;
+      color:rgba(255,255,255,.78);
+      font-size:clamp(17px,1.6vw,21px);
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+
+    .hero-note{
+      justify-self:end;
+      width:min(100%,330px);
+      padding:24px;
+      border-top:1px solid rgba(255,255,255,.32);
+      color:rgba(255,255,255,.78);
+      font-size:14px;
+    }
+    .hero-note strong{display:block;color:white;font-size:17px;margin-bottom:6px}
+
+    section{padding:110px 0}
+    .section-kicker{
+      margin:0 0 14px;
+      color:var(--wood);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:12px;
+      font-weight:850;
+    }
+    h2{
+      margin:0;
+      font:500 clamp(42px,5.2vw,74px)/.98 Georgia,"Times New Roman",serif;
+      letter-spacing:-.045em;
+    }
+    .lead{font-size:18px;color:#5c655d;max-width:680px}
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:80px;
+      align-items:start;
+    }
+    .intro-copy p{margin:0 0 20px;font-size:20px;color:#556057}
+    .signature{
+      margin-top:42px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-weight:800;
+    }
+    .signature span{width:58px;height:1px;background:var(--wood)}
+
+    .services{background:#ede6d9}
+    .service-head{
+      display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:48px
+    }
+    .service-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+    .service{
+      min-height:330px;
+      padding:30px;
+      border:1px solid rgba(24,32,24,.1);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.46);
+      position:relative;
+      overflow:hidden;
+      transition:.28s ease;
+    }
+    .service:hover{transform:translateY(-7px);background:rgba(255,255,255,.72);box-shadow:var(--shadow)}
+    .num{font:500 15px Georgia,serif;color:var(--wood)}
+    .service h3{margin:105px 0 12px;font:500 31px/1.05 Georgia,serif;letter-spacing:-.03em}
+    .service p{margin:0;color:#61685f}
+    .service svg{position:absolute;right:-6px;top:18px;width:118px;height:118px;opacity:.14}
+
+    .process{
+      display:grid;
+      grid-template-columns:.88fr 1.12fr;
+      gap:90px;
+      align-items:center;
+    }
+    .rings{
+      border-radius:50%;
+      aspect-ratio:1;
+      position:relative;
+      background:
+        repeating-radial-gradient(ellipse at 52% 48%,transparent 0 20px,rgba(99,61,36,.21) 21px 23px,transparent 24px 45px),
+        radial-gradient(circle at 40% 34%,#d4ad79,#9b633e 57%,#613a24);
+      box-shadow:inset 0 0 0 20px rgba(255,255,255,.05),0 30px 80px rgba(82,50,30,.23);
+    }
+    .rings:after{
+      content:"";
+      position:absolute;
+      inset:12%;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.42);
+    }
+    .steps{margin-top:32px}
+    .step{
+      display:grid;
+      grid-template-columns:52px 1fr;
+      gap:15px;
+      padding:20px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .step b{font:500 16px Georgia,serif;color:var(--wood)}
+    .step h3{margin:0 0 5px;font-size:18px}
+    .step p{margin:0;color:#677067;font-size:14px}
+
+    .quote{
+      background:var(--ink);
+      color:white;
+      overflow:hidden;
+    }
+    .quote-box{
+      position:relative;
+      padding:20px 0;
+    }
+    .quote-box p{
+      margin:0;
+      max-width:980px;
+      font:400 clamp(38px,5.3vw,74px)/1.05 Georgia,serif;
+      letter-spacing:-.045em;
+    }
+    .quote-box p span{color:#caaa82}
+    .quote-box small{display:block;margin-top:28px;color:rgba(255,255,255,.58)}
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:.85fr 1.15fr;
+      gap:70px;
+    }
+    .contact-card{
+      padding:34px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 18px 70px rgba(24,32,24,.07);
+    }
+    .contact-row{
+      display:grid;
+      grid-template-columns:118px 1fr;
+      gap:18px;
+      padding:18px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .contact-row:last-child{border:0}
+    .contact-row span{color:#7d857d;font-size:13px}
+    .contact-row strong{font-weight:760}
+
+    .contact-form{display:grid;gap:13px;margin-top:8px}
+    .field{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:#f7f3eb;
+      padding:15px 16px;
+      outline:none;
+      transition:.2s;
+    }
+    .field:focus{border-color:#987054;background:white;box-shadow:0 0 0 4px rgba(154,96,56,.08)}
+    textarea.field{min-height:130px;resize:vertical}
+    .tiny{font-size:12px;color:#81877f}
+
+    footer{
+      padding:30px 0 40px;
+      border-top:1px solid var(--line);
+      color:#6d746d;
+      font-size:13px;
+    }
+    .footer-inner{display:flex;justify-content:space-between;gap:30px;align-items:center}
+    .footer-brand{color:var(--ink);font-weight:800}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:.7s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    @media(max-width:900px){
+      .links a:not(.nav-cta){display:none}
+      .hero-inner,.intro-grid,.process,.contact-grid{grid-template-columns:1fr}
+      .hero-note{justify-self:start;width:100%}
+      .hero-art{width:76vw;right:-30vw;top:11vh;opacity:.58}
+      .intro-grid,.process,.contact-grid{gap:44px}
+      .service-grid{grid-template-columns:1fr}
+      .service{min-height:240px}
+      .service h3{margin-top:62px}
+      .rings{width:min(100%,560px);margin:auto}
+    }
+
+    @media(max-width:560px){
+      .wrap{width:min(100% - 28px,1180px)}
+      .nav{top:10px}
+      .brand span{font-size:13px}
+      .brand small{display:none}
+      .links{gap:8px}
+      .nav .btn{min-height:42px;padding:0 15px;font-size:13px}
+      .hero-inner{padding-top:130px;padding-bottom:46px}
+      h1{font-size:clamp(54px,18vw,82px)}
+      section{padding:78px 0}
+      .service-head{display:block}
+      .service-head .lead{margin-top:20px}
+      .contact-row{grid-template-columns:1fr;gap:4px}
+      .footer-inner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grain"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Vášeň pro dřevo – domů">
+      <svg viewBox="0 0 50 50" aria-hidden="true">
+        <circle cx="25" cy="25" r="22" fill="#182018"/>
+        <path d="M11 28c7-2 8-12 14-13 7-1 8 9 14 12-7 1-8 10-14 11-6 0-8-8-14-10Z" fill="none" stroke="#d2b18a" stroke-width="2"/>
+        <path d="M16 27c4-2 5-8 9-8 4 0 6 6 9 8-4 1-5 7-9 7-4 0-5-5-9-7Z" fill="none" stroke="#d2b18a" stroke-width="1.5"/>
+        <circle cx="25" cy="27" r="2.5" fill="#d2b18a"/>
+      </svg>
+      <span>Vášeň pro dřevo<small>s.r.o.</small></span>
+    </a>
+
+    <nav class="links">
+      <a href="#o-nas">O nás</a>
+      <a href="#sluzby">Služby</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="btn btn-dark nav-cta" href="#kontakt">Napište nám</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <svg class="hero-art" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+        <circle cx="300" cy="300" r="232" stroke="#c79d6b" stroke-width="3"/>
+        <path d="M300 74c52 54 59 96 25 127-42 38-5 66 15 95 21 31 23 75-7 105-33 33-83 47-99 100" stroke="#c79d6b" stroke-width="6" stroke-linecap="round"/>
+        <path d="M95 282c68-23 111 2 137 38 23 31 57 28 89 16 42-15 78-4 111 38 19 25 43 38 76 41" stroke="#c79d6b" stroke-width="4"/>
+        <path d="M143 175c50 10 77 35 83 72 7 44 33 56 71 45 48-13 91 5 126 55" stroke="#d8b78d" stroke-width="2"/>
+        <circle cx="300" cy="300" r="165" stroke="#d5af7f" stroke-width="2" stroke-dasharray="5 13"/>
+        <circle cx="300" cy="300" r="105" stroke="#d5af7f" stroke-width="2" opacity=".7"/>
+        <circle cx="300" cy="300" r="43" stroke="#d5af7f" stroke-width="2"/>
+      </svg>
+
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">Opava · práce se dřevem</div>
+          <h1>Dřevo.<br><em>Poctivě.</em></h1>
+          <p>
+            Dáváme přírodnímu materiálu tvar, funkci a charakter.
+            Poctivé zpracování dřeva a dřevěné výrobky s důrazem na detail.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" style="background:#d0ad82;color:#182018" href="#kontakt">Poptat spolupráci →</a>
+            <a class="btn btn-light" href="#sluzby">Co děláme</a>
+          </div>
+        </div>
+
+        <aside class="hero-note">
+          <strong>Vášeň pro dřevo s.r.o.</strong>
+          Česká firma z Opavy. Řemeslo, materiál a osobní přístup bez zbytečných řečí kolem.
+        </aside>
+      </div>
+    </section>
+
+    <section id="o-nas">
+      <div class="wrap intro-grid reveal">
+        <div>
+          <p class="section-kicker">O nás</p>
+          <h2>Materiál, který si zaslouží respekt.</h2>
+        </div>
+
+        <div class="intro-copy">
+          <p>
+            Dřevo není anonymní surovina. Každý kus má jinou kresbu, strukturu i příběh.
+            Proto k němu přistupujeme s rozumem a s citem pro detail.
+          </p>
+          <p>
+            Ať už jde o zpracování dřeva, výrobu dřevěných prvků nebo dodávku materiálu,
+            cílem je vždy stejný: čisté provedení, férová domluva a výsledek, který dává smysl.
+          </p>
+          <div class="signature"><span></span> Vášeň pro dřevo · Opava</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="sluzby">
+      <div class="wrap">
+        <div class="service-head reveal">
+          <div>
+            <p class="section-kicker">Co děláme</p>
+            <h2>Od materiálu<br>k hotové věci.</h2>
+          </div>
+          <p class="lead">Zaměřujeme se na zpracování dřeva, dřevěné výrobky a související obchodní činnost.</p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service reveal">
+            <div class="num">01</div>
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="13" fill="none" stroke="currentColor"/></svg>
+            <h3>Zpracování<br>dřeva</h3>
+            <p>Řezání, opracování a příprava materiálu podle konkrétního využití.</p>
+          </article>
+
+          <article class="service reveal">
+            <div class="num">02</div>
+            <svg viewBox="0 0 100 100"><path d="M22 76V38l28-16 28 16v38H22Z" fill="none" stroke="currentColor"/><path d="M40 76V52h20v24" fill="none" stroke="currentColor"/></svg>
+            <h3>Dřevěné<br>výrobky</h3>
+            <p>Praktické a poctivě zpracované výrobky ze dřeva s důrazem na provedení.</p>
+          </article>
+
+          <article class="service reveal">
+            <div class="num">03</div>
+            <svg viewBox="0 0 100 100"><path d="M20 32h60M25 32l8 48h34l8-48M34 47h32M37 61h26" fill="none" stroke="currentColor"/></svg>
+            <h3>Prodej &amp;<br>spolupráce</h3>
+            <p>Velkoobchodní i maloobchodní spolupráce v oblasti dřeva a souvisejících výrobků.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap process reveal">
+        <div class="rings" aria-label="Stylizovaný řez dřevem"></div>
+        <div>
+          <p class="section-kicker">Jak pracujeme</p>
+          <h2>Jednoduše.<br>Od domluvy k výsledku.</h2>
+          <div class="steps">
+            <div class="step">
+              <b>01</b><div><h3>Řeknete nám, co potřebujete</h3><p>Popíšete zadání, rozměry, materiál nebo představu.</p></div>
+            </div>
+            <div class="step">
+              <b>02</b><div><h3>Navrhneme řešení</h3><p>Upřesníme provedení, možnosti a další postup.</p></div>
+            </div>
+            <div class="step">
+              <b>03</b><div><h3>Jdeme na dřevo</h3><p>Po odsouhlasení se pustíme do realizace a držíme se domluvy.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote">
+      <div class="wrap quote-box reveal">
+        <p>„Dobrá práce se pozná podle detailu. <span>U dřeva dvojnásob.</span>“</p>
+        <small>Vášeň pro dřevo s.r.o.</small>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <div class="wrap contact-grid reveal">
+        <div>
+          <p class="section-kicker">Kontakt</p>
+          <h2>Máte projekt?<br>Ozvěte se.</h2>
+          <p class="lead" style="margin-top:24px">
+            Napište nám stručně, co potřebujete. Ozveme se a domluvíme další postup.
+          </p>
+
+          <div class="contact-card" style="margin-top:34px">
+            <div class="contact-row">
+              <span>Firma</span>
+              <strong>Vášeň pro dřevo s.r.o.</strong>
+            </div>
+            <div class="contact-row">
+              <span>IČO</span>
+              <strong>29867754</strong>
+            </div>
+            <div class="contact-row">
+              <span>Sídlo</span>
+              <strong>Antonína Sovy 1229/6<br>747 05 Opava – Kateřinky</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h3 style="font:500 31px Georgia,serif;margin:0 0 20px">Nezávazná poptávka</h3>
+          <form class="contact-form" id="contactForm">
+            <input class="field" type="text" name="name" placeholder="Jméno / firma" required>
+            <input class="field" type="email" name="email" placeholder="E-mail" required>
+            <input class="field" type="tel" name="phone" placeholder="Telefon">
+            <textarea class="field" name="message" placeholder="Co pro vás můžeme udělat?" required></textarea>
+            <button class="btn btn-dark" type="submit">Odeslat poptávku →</button>
+            <div class="tiny" id="formNote">
+              Formulář je připravený k napojení na váš e-mail / Formspree / vlastní backend.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div>
+        <div class="footer-brand">Vášeň pro dřevo s.r.o.</div>
+        <div>© <span id="year"></span> · Všechna práva vyhrazena</div>
+      </div>
+      <div>vasenprodrevo.cz · IČO 29867754</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const note = document.getElementById('formNote');
+      note.textContent = 'Formulář zatím není napojený na e-mail. Doplňte cílovou adresu nebo formulářovou službu.';
+      note.style.fontWeight = '700';
+    });
+  </script>
+</body>
+</html>
