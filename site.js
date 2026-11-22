@@ -28,7 +28,7 @@
   const submit = form.querySelector('button[type="submit"]');
   const widget = document.getElementById('turnstile-widget');
   const apiBase = form.dataset.apiBase || '';
-  const FALLBACK = 'Formulář je momentálně nedostupný. Zavolejte nám prosím na +420 704 099 628 nebo napište na vasenprodrevo@seznam.cz.';
+  const FALLBACK = 'Formulář je momentálně nedostupný. Zavolejte nám prosím na +420 704 099 628 nebo napište na info@vasenprodrevo.cz.';
   let widgetId, token = '';
 
   const setStatus = (message, error = false) => {
