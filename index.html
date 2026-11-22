@@ -1,391 +1,41 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#182018" />
-  <meta name="description" content="Vášeň pro dřevo s.r.o. – zpracování dřeva a dřevěné výrobky z Opavy. Poctivé řemeslo, přírodní materiál, osobní přístup." />
-  <title>Vášeň pro dřevo | Dřevo, které má charakter</title>
-
-  <style>
-    :root{
-      --ink:#182018;
-      --ink-2:#263128;
-      --cream:#f4efe4;
-      --paper:#fbf8f1;
-      --wood:#9a6038;
-      --wood-dark:#673d24;
-      --moss:#66765b;
-      --line:rgba(24,32,24,.14);
-      --shadow:0 24px 70px rgba(24,32,24,.12);
-      --radius:28px;
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      color:var(--ink);
-      background:var(--paper);
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      line-height:1.55;
-      overflow-x:hidden;
-    }
-
-    a{color:inherit;text-decoration:none}
-    button,input,textarea{font:inherit}
-    ::selection{background:#cfb28d;color:var(--ink)}
-
-    .grain{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:100;
-      opacity:.18;
-      mix-blend-mode:multiply;
-      background-image:
-        repeating-radial-gradient(ellipse at 0 0, transparent 0, rgba(85,58,38,.06) 1px, transparent 2px, transparent 9px),
-        repeating-linear-gradient(8deg, transparent 0 7px, rgba(85,58,38,.025) 8px 9px);
-    }
-
-    .wrap{width:min(1180px,calc(100% - 40px));margin:auto}
-
-    .nav{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      width:min(1180px,calc(100% - 28px));
-      z-index:50;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      padding:11px 12px 11px 18px;
-      border:1px solid rgba(255,255,255,.25);
-      background:rgba(247,242,232,.82);
-      backdrop-filter:blur(18px);
-      border-radius:999px;
-      box-shadow:0 12px 45px rgba(24,32,24,.08);
-    }
-
-    .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em}
-    .brand svg{width:40px;height:40px}
-    .brand small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6b746b;font-weight:700}
-
-    .links{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:650}
-    .links a{opacity:.72;transition:.2s ease}
-    .links a:hover{opacity:1}
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height:48px;
-      padding:0 20px;
-      border-radius:999px;
-      border:1px solid transparent;
-      font-weight:760;
-      transition:.22s ease;
-      cursor:pointer;
-    }
-    .btn-dark{background:var(--ink);color:white}
-    .btn-dark:hover{transform:translateY(-2px);background:#273028}
-    .btn-light{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:white}
-    .btn-light:hover{background:rgba(255,255,255,.15)}
-    .btn-outline{border-color:var(--line);background:transparent}
-    .btn-outline:hover{background:white}
-
-    .hero{
-      min-height:100svh;
-      position:relative;
-      display:grid;
-      align-items:end;
-      color:#fff;
-      overflow:hidden;
-      background:
-        linear-gradient(90deg,rgba(13,18,13,.88) 0%,rgba(13,18,13,.64) 42%,rgba(13,18,13,.24) 72%,rgba(13,18,13,.46) 100%),
-        radial-gradient(circle at 82% 28%,rgba(212,166,110,.5),transparent 28%),
-        linear-gradient(135deg,#33402e,#161d16 68%,#482c1c);
-    }
-
-    .hero:before{
-      content:"";
-      position:absolute;inset:0;
-      opacity:.44;
-      background:
-        repeating-radial-gradient(ellipse at 92% 52%, transparent 0 12px, rgba(226,193,151,.16) 13px 15px, transparent 16px 34px),
-        linear-gradient(110deg,transparent 0 58%,rgba(161,102,61,.16) 59% 60%,transparent 61%);
-      transform:scale(1.25);
-    }
-
-    .hero-art{
-      position:absolute;
-      right:-7vw;
-      top:8vh;
-      width:min(720px,58vw);
-      aspect-ratio:1/1;
-      opacity:.92;
-      filter:drop-shadow(0 28px 45px rgba(0,0,0,.25));
-    }
-
-    .hero-inner{
-      position:relative;
-      z-index:2;
-      padding:160px 0 74px;
-      display:grid;
-      grid-template-columns:minmax(0,1.15fr) .85fr;
-      gap:60px;
-      align-items:end;
-    }
-
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:10px;
-      text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:800;
-      opacity:.78;margin-bottom:22px;
-    }
-    .eyebrow:before{content:"";width:34px;height:1px;background:currentColor}
-
-    h1{
-      margin:0;
-      max-width:800px;
-      font-family:Georgia,"Times New Roman",serif;
-      font-size:clamp(58px,8.2vw,126px);
-      line-height:.83;
-      letter-spacing:-.065em;
-      font-weight:500;
-    }
-    h1 em{font-weight:400;color:#d7bb95}
-
-    .hero-copy p{
-      max-width:620px;
-      margin:30px 0 30px;
-      color:rgba(255,255,255,.78);
-      font-size:clamp(17px,1.6vw,21px);
-    }
-    .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
-
-    .hero-note{
-      justify-self:end;
-      width:min(100%,330px);
-      padding:24px;
-      border-top:1px solid rgba(255,255,255,.32);
-      color:rgba(255,255,255,.78);
-      font-size:14px;
-    }
-    .hero-note strong{display:block;color:white;font-size:17px;margin-bottom:6px}
-
-    section{padding:110px 0}
-    .section-kicker{
-      margin:0 0 14px;
-      color:var(--wood);
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      font-size:12px;
-      font-weight:850;
-    }
-    h2{
-      margin:0;
-      font:500 clamp(42px,5.2vw,74px)/.98 Georgia,"Times New Roman",serif;
-      letter-spacing:-.045em;
-    }
-    .lead{font-size:18px;color:#5c655d;max-width:680px}
-
-    .intro-grid{
-      display:grid;
-      grid-template-columns:.8fr 1.2fr;
-      gap:80px;
-      align-items:start;
-    }
-    .intro-copy p{margin:0 0 20px;font-size:20px;color:#556057}
-    .signature{
-      margin-top:42px;
-      display:flex;
-      align-items:center;
-      gap:16px;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.1em;
-      font-weight:800;
-    }
-    .signature span{width:58px;height:1px;background:var(--wood)}
-
-    .services{background:#ede6d9}
-    .service-head{
-      display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:48px
-    }
-    .service-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-    }
-    .service{
-      min-height:330px;
-      padding:30px;
-      border:1px solid rgba(24,32,24,.1);
-      border-radius:var(--radius);
-      background:rgba(255,255,255,.46);
-      position:relative;
-      overflow:hidden;
-      transition:.28s ease;
-    }
-    .service:hover{transform:translateY(-7px);background:rgba(255,255,255,.72);box-shadow:var(--shadow)}
-    .num{font:500 15px Georgia,serif;color:var(--wood)}
-    .service h3{margin:105px 0 12px;font:500 31px/1.05 Georgia,serif;letter-spacing:-.03em}
-    .service p{margin:0;color:#61685f}
-    .service svg{position:absolute;right:-6px;top:18px;width:118px;height:118px;opacity:.14}
-
-    .process{
-      display:grid;
-      grid-template-columns:.88fr 1.12fr;
-      gap:90px;
-      align-items:center;
-    }
-    .rings{
-      border-radius:50%;
-      aspect-ratio:1;
-      position:relative;
-      background:
-        repeating-radial-gradient(ellipse at 52% 48%,transparent 0 20px,rgba(99,61,36,.21) 21px 23px,transparent 24px 45px),
-        radial-gradient(circle at 40% 34%,#d4ad79,#9b633e 57%,#613a24);
-      box-shadow:inset 0 0 0 20px rgba(255,255,255,.05),0 30px 80px rgba(82,50,30,.23);
-    }
-    .rings:after{
-      content:"";
-      position:absolute;
-      inset:12%;
-      border-radius:50%;
-      border:1px solid rgba(255,255,255,.42);
-    }
-    .steps{margin-top:32px}
-    .step{
-      display:grid;
-      grid-template-columns:52px 1fr;
-      gap:15px;
-      padding:20px 0;
-      border-bottom:1px solid var(--line);
-    }
-    .step b{font:500 16px Georgia,serif;color:var(--wood)}
-    .step h3{margin:0 0 5px;font-size:18px}
-    .step p{margin:0;color:#677067;font-size:14px}
-
-    .quote{
-      background:var(--ink);
-      color:white;
-      overflow:hidden;
-    }
-    .quote-box{
-      position:relative;
-      padding:20px 0;
-    }
-    .quote-box p{
-      margin:0;
-      max-width:980px;
-      font:400 clamp(38px,5.3vw,74px)/1.05 Georgia,serif;
-      letter-spacing:-.045em;
-    }
-    .quote-box p span{color:#caaa82}
-    .quote-box small{display:block;margin-top:28px;color:rgba(255,255,255,.58)}
-
-    .contact-grid{
-      display:grid;
-      grid-template-columns:.85fr 1.15fr;
-      gap:70px;
-    }
-    .contact-card{
-      padding:34px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:0 18px 70px rgba(24,32,24,.07);
-    }
-    .contact-row{
-      display:grid;
-      grid-template-columns:118px 1fr;
-      gap:18px;
-      padding:18px 0;
-      border-bottom:1px solid var(--line);
-    }
-    .contact-row:last-child{border:0}
-    .contact-row span{color:#7d857d;font-size:13px}
-    .contact-row strong{font-weight:760}
-
-    .contact-form{display:grid;gap:13px;margin-top:8px}
-    .field{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:15px;
-      background:#f7f3eb;
-      padding:15px 16px;
-      outline:none;
-      transition:.2s;
-    }
-    .field:focus{border-color:#987054;background:white;box-shadow:0 0 0 4px rgba(154,96,56,.08)}
-    textarea.field{min-height:130px;resize:vertical}
-    .tiny{font-size:12px;color:#81877f}
-
-    footer{
-      padding:30px 0 40px;
-      border-top:1px solid var(--line);
-      color:#6d746d;
-      font-size:13px;
-    }
-    .footer-inner{display:flex;justify-content:space-between;gap:30px;align-items:center}
-    .footer-brand{color:var(--ink);font-weight:800}
-
-    .reveal{opacity:0;transform:translateY(20px);transition:.7s ease}
-    .reveal.show{opacity:1;transform:none}
-
-    @media(max-width:900px){
-      .links a:not(.nav-cta){display:none}
-      .hero-inner,.intro-grid,.process,.contact-grid{grid-template-columns:1fr}
-      .hero-note{justify-self:start;width:100%}
-      .hero-art{width:76vw;right:-30vw;top:11vh;opacity:.58}
-      .intro-grid,.process,.contact-grid{gap:44px}
-      .service-grid{grid-template-columns:1fr}
-      .service{min-height:240px}
-      .service h3{margin-top:62px}
-      .rings{width:min(100%,560px);margin:auto}
-    }
-
-    @media(max-width:560px){
-      .wrap{width:min(100% - 28px,1180px)}
-      .nav{top:10px}
-      .brand span{font-size:13px}
-      .brand small{display:none}
-      .links{gap:8px}
-      .nav .btn{min-height:42px;padding:0 15px;font-size:13px}
-      .hero-inner{padding-top:130px;padding-bottom:46px}
-      h1{font-size:clamp(54px,18vw,82px)}
-      section{padding:78px 0}
-      .service-head{display:block}
-      .service-head .lead{margin-top:20px}
-      .contact-row{grid-template-columns:1fr;gap:4px}
-      .footer-inner{align-items:flex-start;flex-direction:column}
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#182018">
+  <meta name="robots" content="index, follow">
+  <title>Pořez dřeva a formátování Opava | Vášeň pro dřevo s.r.o.</title>
+  <meta name="description" content="Pořez kulatiny na pásové pile, formátování desek a výrobky ze dřeva na míru v Opavě. Vášeň pro dřevo s.r.o. – poptávku vyřídíme osobně a rychle.">
+  <link rel="canonical" href="https://vasenprodrevo.cz/">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="images/logo-192.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:site_name" content="Vášeň pro dřevo">
+  <meta property="og:title" content="Vášeň pro dřevo s.r.o. | Pořez dřeva Opava">
+  <meta property="og:description" content="Pořez kulatiny, formátování desek a výrobky ze dřeva na míru. Opava a okolí.">
+  <meta property="og:url" content="https://vasenprodrevo.cz/">
+  <meta property="og:image" content="https://vasenprodrevo.cz/images/og.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Vášeň pro dřevo s.r.o.","url":"https://vasenprodrevo.cz/","logo":"https://vasenprodrevo.cz/images/logo-192.png","image":"https://vasenprodrevo.cz/images/og.jpg","telephone":"+420704099628","email":"vasenprodrevo@seznam.cz","identifier":"29867754","address":{"@type":"PostalAddress","streetAddress":"Antonína Sovy 1229/6","postalCode":"747 05","addressLocality":"Opava","addressCountry":"CZ"},"areaServed":"Opava a Moravskoslezský kraj","sameAs":["https://www.instagram.com/vasenprodrevo/","https://www.facebook.com/Vasenprodrevos.r.o"]}</script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <a class="skip" href="#obsah">Přeskočit na obsah</a>
   <div class="grain"></div>
 
   <header class="nav">
-    <a class="brand" href="#top" aria-label="Vášeň pro dřevo – domů">
-      <svg viewBox="0 0 50 50" aria-hidden="true">
-        <circle cx="25" cy="25" r="22" fill="#182018"/>
-        <path d="M11 28c7-2 8-12 14-13 7-1 8 9 14 12-7 1-8 10-14 11-6 0-8-8-14-10Z" fill="none" stroke="#d2b18a" stroke-width="2"/>
-        <path d="M16 27c4-2 5-8 9-8 4 0 6 6 9 8-4 1-5 7-9 7-4 0-5-5-9-7Z" fill="none" stroke="#d2b18a" stroke-width="1.5"/>
-        <circle cx="25" cy="27" r="2.5" fill="#d2b18a"/>
-      </svg>
-      <span>Vášeň pro dřevo<small>s.r.o.</small></span>
+    <a class="brand" href="#top" aria-label="Vášeň pro dřevo – na začátek">
+      <img src="images/logo-96.png" width="44" height="44" alt="">
+      <span>Vášeň pro dřevo<small>s.r.o. · Opava</small></span>
     </a>
-
-    <nav class="links">
-      <a href="#o-nas">O nás</a>
+    <nav class="links" aria-label="Hlavní navigace">
       <a href="#sluzby">Služby</a>
+      <a href="#stroje">Stroje</a>
+      <a href="#nase-prace">Naše práce</a>
       <a href="#kontakt">Kontakt</a>
-      <a class="btn btn-dark nav-cta" href="#kontakt">Napište nám</a>
+      <a class="btn btn-dark nav-cta" href="#poptavka">Poptat</a>
     </nav>
   </header>
 
@@ -401,23 +51,24 @@
         <circle cx="300" cy="300" r="43" stroke="#d5af7f" stroke-width="2"/>
       </svg>
 
-      <div class="wrap hero-inner">
+      <div class="wrap hero-inner" id="obsah">
         <div class="hero-copy">
-          <div class="eyebrow">Opava · práce se dřevem</div>
-          <h1>Dřevo.<br><em>Poctivě.</em></h1>
+          <div class="eyebrow">Pořez dřeva · Opava</div>
+          <h1>Dřevo.<br><em>Na míru.</em></h1>
           <p>
-            Dáváme přírodnímu materiálu tvar, funkci a charakter.
-            Poctivé zpracování dřeva a dřevěné výrobky s důrazem na detail.
+            Nařežeme vaši kulatinu na prkna, fošny i hranoly, přesně naformátujeme desky
+            a vyrobíme, co potřebujete. Od kmene po hotový kus – v Opavě a okolí.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-dark" style="background:#d0ad82;color:#182018" href="#kontakt">Poptat spolupráci →</a>
-            <a class="btn btn-light" href="#sluzby">Co děláme</a>
+            <a class="btn btn-dark btn-wood" href="#poptavka">Poslat poptávku →</a>
+            <a class="btn btn-light" href="tel:+420704099628">+420 704 099 628</a>
           </div>
         </div>
 
         <aside class="hero-note">
+          <img src="images/logo.webp" width="120" height="120" alt="Logo Vášeň pro dřevo s.r.o.">
           <strong>Vášeň pro dřevo s.r.o.</strong>
-          Česká firma z Opavy. Řemeslo, materiál a osobní přístup bez zbytečných řečí kolem.
+          Mladá opavská firma s vlastní pásovou pilou a formátovací pilou. Domluva napřímo, bez prostředníků.
         </aside>
       </div>
     </section>
@@ -426,17 +77,17 @@
       <div class="wrap intro-grid reveal">
         <div>
           <p class="section-kicker">O nás</p>
-          <h2>Materiál, který si zaslouží respekt.</h2>
+          <h2>Z kmene<br>až k hotové věci.</h2>
         </div>
-
         <div class="intro-copy">
           <p>
-            Dřevo není anonymní surovina. Každý kus má jinou kresbu, strukturu i příběh.
-            Proto k němu přistupujeme s rozumem a s citem pro detail.
+            Vášeň pro dřevo jsme založili v roce 2026 v Opavě. Máme vlastní pásovou pilu na pořez kulatiny
+            a formátovací pilu na přesný přířez, takže zvládneme celou cestu – od surového kmene
+            přes řezivo až po hotový výrobek.
           </p>
           <p>
-            Ať už jde o zpracování dřeva, výrobu dřevěných prvků nebo dodávku materiálu,
-            cílem je vždy stejný: čisté provedení, férová domluva a výsledek, který dává smysl.
+            Nejsme velká pila s frontou na týdny. Zakázku s vámi probereme osobně, řekneme rovnou,
+            co jde a co ne, a dodržíme, na čem se domluvíme.
           </p>
           <div class="signature"><span></span> Vášeň pro dřevo · Opava</div>
         </div>
@@ -448,53 +99,136 @@
         <div class="service-head reveal">
           <div>
             <p class="section-kicker">Co děláme</p>
-            <h2>Od materiálu<br>k hotové věci.</h2>
+            <h2>Pořez, přířez<br>a výroba.</h2>
           </div>
-          <p class="lead">Zaměřujeme se na zpracování dřeva, dřevěné výrobky a související obchodní činnost.</p>
+          <p class="lead">Přivezte kulatinu, desky nebo jen nápad. Poradíme s rozměry a materiálem a připravíme nabídku.</p>
         </div>
 
-        <div class="service-grid">
+        <div class="service-grid service-grid-4">
           <article class="service reveal">
             <div class="num">01</div>
-            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="13" fill="none" stroke="currentColor"/></svg>
-            <h3>Zpracování<br>dřeva</h3>
-            <p>Řezání, opracování a příprava materiálu podle konkrétního využití.</p>
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="13" fill="none" stroke="currentColor"/></svg>
+            <h3>Pořez<br>kulatiny</h3>
+            <p>Prkna, fošny, hranoly a trámy z vaší i naší kulatiny na pásové pile. Tloušťky a šířky podle zadání.</p>
           </article>
-
           <article class="service reveal">
             <div class="num">02</div>
-            <svg viewBox="0 0 100 100"><path d="M22 76V38l28-16 28 16v38H22Z" fill="none" stroke="currentColor"/><path d="M40 76V52h20v24" fill="none" stroke="currentColor"/></svg>
-            <h3>Dřevěné<br>výrobky</h3>
-            <p>Praktické a poctivě zpracované výrobky ze dřeva s důrazem na provedení.</p>
+            <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="18" y="26" width="64" height="48" fill="none" stroke="currentColor"/><path d="M18 50h64M50 26v48" fill="none" stroke="currentColor"/></svg>
+            <h3>Formátování<br>a přířez</h3>
+            <p>Přesný přířez masivu, spárovek i deskového materiálu na formátovací pile, včetně úhlových řezů.</p>
           </article>
-
           <article class="service reveal">
             <div class="num">03</div>
-            <svg viewBox="0 0 100 100"><path d="M20 32h60M25 32l8 48h34l8-48M34 47h32M37 61h26" fill="none" stroke="currentColor"/></svg>
-            <h3>Prodej &amp;<br>spolupráce</h3>
-            <p>Velkoobchodní i maloobchodní spolupráce v oblasti dřeva a souvisejících výrobků.</p>
+            <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 76V38l28-16 28 16v38H22Z" fill="none" stroke="currentColor"/><path d="M40 76V52h20v24" fill="none" stroke="currentColor"/></svg>
+            <h3>Výrobky<br>na míru</h3>
+            <p>Palety, prvky na zahradu, police, stoly nebo konstrukce. Vyrobíme podle vašich rozměrů a představ.</p>
+          </article>
+          <article class="service reveal">
+            <div class="num">04</div>
+            <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M20 32h60M25 32l8 48h34l8-48M34 47h32M37 61h26" fill="none" stroke="currentColor"/></svg>
+            <h3>Řezivo<br>a spolupráce</h3>
+            <p>Prodej řeziva menším odběratelům i firmám. Pro truhláře a stavebníky rádi zajistíme pravidelný pořez.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section>
+    <section id="stroje">
+      <div class="wrap">
+        <div class="service-head reveal">
+          <div>
+            <p class="section-kicker">Naše vybavení</p>
+            <h2>Stroje,<br>na které se spolehneme.</h2>
+          </div>
+          <p class="lead">Kvalitní technika znamená přesný řez, méně odpadu a hotovo dřív.</p>
+        </div>
+
+        <div class="machine-grid">
+          <article class="machine reveal">
+            <div class="machine-photo">
+              <picture>
+                <source srcset="images/stroj-pasova-pila.webp" type="image/webp">
+                <img src="images/stroj-pasova-pila.jpg" width="1057" height="757" loading="lazy" alt="Pásová pila Pilous CTR 750 LX na kolejové dráze">
+              </picture>
+            </div>
+            <div class="machine-body">
+              <p class="machine-type">Pásová pila na kulatinu</p>
+              <h3>Pilous CTR 750 LX</h3>
+              <p>Horizontální pásová pila s vlastní dráhou. Úzký pilový pás znamená tenký řez, méně pilin a víc řeziva z každého kmene.</p>
+              <ul>
+                <li>Kmeny do průměru 75&nbsp;cm</li>
+                <li>Prkna, fošny, hranoly, trámy</li>
+                <li>Řez na milimetry podle zadání</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="machine reveal">
+            <div class="machine-photo">
+              <picture>
+                <source srcset="images/stroj-formatovaci-pila.webp" type="image/webp">
+                <img src="images/stroj-formatovaci-pila.jpg" width="720" height="486" loading="lazy" alt="Formátovací pila Holzmann FKS 305VF-3200 s posuvným stolem">
+              </picture>
+            </div>
+            <div class="machine-body">
+              <p class="machine-type">Formátovací pila</p>
+              <h3>Holzmann FKS 305VF-3200</h3>
+              <p>Formátovací pila s dlouhým posuvným stolem pro čisté a pravoúhlé řezy masivu i velkoformátových desek.</p>
+              <ul>
+                <li>Posuvný stůl 3&nbsp;200&nbsp;mm</li>
+                <li>Masiv, spárovky, OSB, překližka</li>
+                <li>Podélné, příčné i úhlové řezy</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="postup">
       <div class="wrap process reveal">
-        <div class="rings" aria-label="Stylizovaný řez dřevem"></div>
+        <div class="rings" aria-hidden="true"></div>
         <div>
           <p class="section-kicker">Jak pracujeme</p>
           <h2>Jednoduše.<br>Od domluvy k výsledku.</h2>
           <div class="steps">
             <div class="step">
-              <b>01</b><div><h3>Řeknete nám, co potřebujete</h3><p>Popíšete zadání, rozměry, materiál nebo představu.</p></div>
+              <b>01</b><div><h3>Napíšete nebo zavoláte</h3><p>Co potřebujete, z jakého dřeva, rozměry a množství. Klidně přiložte fotku nebo náčrt.</p></div>
             </div>
             <div class="step">
-              <b>02</b><div><h3>Navrhneme řešení</h3><p>Upřesníme provedení, možnosti a další postup.</p></div>
+              <b>02</b><div><h3>Domluvíme detaily a cenu</h3><p>Navrhneme nejlepší postup, řekneme cenu a termín. Bez závazku.</p></div>
             </div>
             <div class="step">
-              <b>03</b><div><h3>Jdeme na dřevo</h3><p>Po odsouhlasení se pustíme do realizace a držíme se domluvy.</p></div>
+              <b>03</b><div><h3>Řežeme a předáme</h3><p>Po odsouhlasení se pustíme do práce. Hotové řezivo nebo výrobek si vyzvednete, nebo domluvíme dopravu.</p></div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="nase-prace">
+      <div class="wrap">
+        <div class="service-head reveal">
+          <div>
+            <p class="section-kicker">Naše práce</p>
+            <h2>Ukázky<br>z dílny.</h2>
+          </div>
+          <p class="lead">Tady brzy najdete fotky hotových zakázek – řezivo, přířezy i výrobky na míru. Mezitím sledujte novinky na <a class="text-link" href="https://www.instagram.com/vasenprodrevo/" target="_blank" rel="noopener noreferrer">Instagramu</a>.</p>
+        </div>
+
+        <!--
+          Jak přidat fotku: nahrajte ji do složky images/prace/ (ideálně .webp nebo .jpg, šířka cca 1600 px)
+          a místo jednoho <div class="work-card work-empty">…</div> vložte:
+
+          <figure class="work-card">
+            <button type="button" data-full="images/prace/nazev.jpg"><img src="images/prace/nazev.jpg" loading="lazy" width="1600" height="1200" alt="Popis fotky"></button>
+            <figcaption>Krátký popis zakázky</figcaption>
+          </figure>
+        -->
+        <div class="work-grid" data-work-grid>
+          <div class="work-card work-empty" aria-hidden="true"><span>Fotky připravujeme</span></div>
+          <div class="work-card work-empty" aria-hidden="true"><span>Fotky připravujeme</span></div>
+          <div class="work-card work-empty" aria-hidden="true"><span>Fotky připravujeme</span></div>
         </div>
       </div>
     </section>
@@ -510,38 +244,53 @@
       <div class="wrap contact-grid reveal">
         <div>
           <p class="section-kicker">Kontakt</p>
-          <h2>Máte projekt?<br>Ozvěte se.</h2>
+          <h2>Máte dřevo<br>nebo nápad?</h2>
           <p class="lead" style="margin-top:24px">
-            Napište nám stručně, co potřebujete. Ozveme se a domluvíme další postup.
+            Napište, co potřebujete nařezat nebo vyrobit. Ozveme se vám co nejdřív.
           </p>
 
-          <div class="contact-card" style="margin-top:34px">
-            <div class="contact-row">
-              <span>Firma</span>
-              <strong>Vášeň pro dřevo s.r.o.</strong>
-            </div>
-            <div class="contact-row">
-              <span>IČO</span>
-              <strong>29867754</strong>
-            </div>
-            <div class="contact-row">
-              <span>Sídlo</span>
-              <strong>Antonína Sovy 1229/6<br>747 05 Opava – Kateřinky</strong>
-            </div>
+          <div class="contact-actions">
+            <a href="tel:+420704099628"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h4l2 5-3 2a16 16 0 0 0 5 5l2-3 5 2v4a3 3 0 0 1-3 3C9 20 4 15 3 6a3 3 0 0 1 3-3Z"/></svg>Zavolat</a>
+            <a href="https://wa.me/420704099628" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 1-12 7l-5 2 1-5a8 8 0 1 1 16-4Z"/><path d="M8 7c0 5 2 7 7 7"/></svg>WhatsApp</a>
+            <a href="mailto:vasenprodrevo@seznam.cz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg>E-mail</a>
           </div>
+
+          <div class="contact-card">
+            <div class="contact-row"><span>Telefon</span><strong><a href="tel:+420704099628">+420 704 099 628</a></strong></div>
+            <div class="contact-row"><span>E-mail</span><strong><a href="mailto:vasenprodrevo@seznam.cz">vasenprodrevo@seznam.cz</a></strong></div>
+            <div class="contact-row"><span>Sledujte nás</span><strong><a href="https://www.instagram.com/vasenprodrevo/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="https://www.facebook.com/Vasenprodrevos.r.o" target="_blank" rel="noopener noreferrer">Facebook</a></strong></div>
+            <div class="contact-row"><span>Sídlo</span><strong>Antonína Sovy 1229/6<br>747 05 Opava – Kateřinky</strong></div>
+            <div class="contact-row"><span>IČO</span><strong>29867754</strong></div>
+          </div>
+          <p class="tiny" style="margin-top:14px">Osobní návštěvu prosím domluvte předem.</p>
         </div>
 
-        <div class="contact-card">
-          <h3 style="font:500 31px Georgia,serif;margin:0 0 20px">Nezávazná poptávka</h3>
-          <form class="contact-form" id="contactForm">
-            <input class="field" type="text" name="name" placeholder="Jméno / firma" required>
-            <input class="field" type="email" name="email" placeholder="E-mail" required>
-            <input class="field" type="tel" name="phone" placeholder="Telefon">
-            <textarea class="field" name="message" placeholder="Co pro vás můžeme udělat?" required></textarea>
-            <button class="btn btn-dark" type="submit">Odeslat poptávku →</button>
-            <div class="tiny" id="formNote">
-              Formulář je připravený k napojení na váš e-mail / Formspree / vlastní backend.
+        <div class="contact-card form-card" id="poptavka">
+          <h3>Nezávazná poptávka</h3>
+          <form class="contact-form" id="inquiry-form" data-api-base="https://vasenprodrevo-poptavky.honza-j-96.workers.dev" novalidate>
+            <label class="sr" for="f-name">Jméno nebo firma</label>
+            <input class="field" id="f-name" type="text" name="name" placeholder="Jméno / firma" autocomplete="name" required minlength="2" maxlength="100">
+            <div class="field-row">
+              <label class="sr" for="f-email">E-mail</label>
+              <input class="field" id="f-email" type="email" name="email" placeholder="E-mail" autocomplete="email" required maxlength="254">
+              <label class="sr" for="f-phone">Telefon</label>
+              <input class="field" id="f-phone" type="tel" name="phone" placeholder="Telefon (nepovinné)" autocomplete="tel" maxlength="40">
             </div>
+            <label class="sr" for="f-service">O co máte zájem</label>
+            <select class="field" id="f-service" name="service">
+              <option value="Pořez kulatiny">Pořez kulatiny</option>
+              <option value="Formátování a přířez">Formátování a přířez</option>
+              <option value="Výrobek na míru">Výrobek na míru</option>
+              <option value="Řezivo / spolupráce">Řezivo / spolupráce</option>
+              <option value="Jiné">Jiné</option>
+            </select>
+            <label class="sr" for="f-message">Zpráva</label>
+            <textarea class="field" id="f-message" name="message" placeholder="Co potřebujete? Druh dřeva, rozměry, množství, termín…" required maxlength="5000"></textarea>
+            <div class="hp" aria-hidden="true"><label>Web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+            <div id="turnstile-widget"></div>
+            <button class="btn btn-dark" type="submit" disabled>Odeslat poptávku →</button>
+            <p class="form-status" id="inquiry-status" role="status" aria-live="polite"></p>
+            <p class="tiny">Odesláním souhlasíte se zpracováním údajů za účelem vyřízení poptávky. <a class="legal-link" href="soukromi.html">Ochrana osobních údajů</a></p>
           </form>
         </div>
       </div>
@@ -552,31 +301,23 @@
     <div class="wrap footer-inner">
       <div>
         <div class="footer-brand">Vášeň pro dřevo s.r.o.</div>
-        <div>© <span id="year"></span> · Všechna práva vyhrazena</div>
+        <div>© <span id="year">2026</span> · IČO 29867754</div>
+        <div>Antonína Sovy 1229/6, 747 05 Opava – Kateřinky</div>
+        <div>Krajský soud v Ostravě, oddíl C, vložka 104801</div>
+        <nav class="footer-links" aria-label="Doplňující odkazy"><a href="soukromi.html">Soukromí a cookies</a><a href="pravni-informace.html">Právní informace</a></nav>
       </div>
-      <div>vasenprodrevo.cz · IČO 29867754</div>
+      <div class="footer-contact">
+        <a href="tel:+420704099628">+420 704 099 628</a><br>
+        <a href="mailto:vasenprodrevo@seznam.cz">vasenprodrevo@seznam.cz</a><br>
+        <a href="https://www.instagram.com/vasenprodrevo/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="https://www.facebook.com/Vasenprodrevos.r.o" target="_blank" rel="noopener noreferrer">Facebook</a>
+      </div>
     </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('show');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const note = document.getElementById('formNote');
-      note.textContent = 'Formulář zatím není napojený na e-mail. Doplňte cílovou adresu nebo formulářovou službu.';
-      note.style.fontWeight = '700';
-    });
-  </script>
+  <dialog class="lightbox" aria-label="Detail fotografie">
+    <div class="lightbox-controls"><button type="button" data-close>Zavřít ×</button></div>
+    <img alt="">
+  </dialog>
+  <script src="site.js" defer></script>
 </body>
 </html>
