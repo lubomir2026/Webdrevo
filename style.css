@@ -410,3 +410,5 @@ select.field{appearance:none;background-image:linear-gradient(45deg,transparent 
 @media(max-width:1060px){.service-grid-4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.machine-grid{grid-template-columns:1fr}.work-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.links a:not(.nav-cta){display:inline-flex}}
 @media(max-width:560px){.service-grid-4,.work-grid{grid-template-columns:1fr}.field-row{grid-template-columns:1fr}.machine-body{padding:22px}.brand img{width:36px;height:36px}.hero-note img{width:90px;height:90px}.links{font-size:13px}}
+#poptavka,#obsah{scroll-margin-top:130px}
+@media(max-width:560px){section[id]{scroll-margin-top:140px}#poptavka{scroll-margin-top:150px}}
